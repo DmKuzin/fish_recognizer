@@ -3,7 +3,7 @@ from flask import Flask, request, render_template
 import numpy as np
 
 app = Flask(__name__)
-model = keras.models.load_model('densnet121_fish.h5')
+#model = keras.models.load_model('densnet121_fish.h5')
 
 @app.route('/')
 def home():
