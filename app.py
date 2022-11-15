@@ -16,6 +16,7 @@ def home():
 @app.route('/predict',methods=['POST'])
 def predict():
     feature_list = request.form.to_dict()
+    #imagefile = flask.request.files('imagefile', '')
 #     feature_list = list(feature_list.values())
 #     feature_list = list(map(int, feature_list))
 #     final_features = np.array(feature_list).reshape(1, 12) 
@@ -28,7 +29,7 @@ def predict():
 #         text = "<=50K"
 
     #text = "<=50K"
-    text = str(feature_list)
+    text = str(list(feature_list.values())[0])
     return render_template('index.html', prediction_text='Employee Income is {}'.format(text))
 
 
