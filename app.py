@@ -13,7 +13,7 @@ def home():
 @app.route('/predict',methods=['POST'])
 def predict():
     #feature_list = request.form.to_dict()
-    imagefile = flask.request.files.get('myfile', '')
+    imagefile = request.files.get('myfile', '')
     
 
     text = "<=50K"
