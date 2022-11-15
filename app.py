@@ -18,7 +18,7 @@ def predict():
 
     #text = "<=50K"
     #text = str(list(feature_list.values())[0])
-    text = str(imagefile)
+    #text = str(imagefile)
     return render_template('index.html', prediction_text='Employee Income is {}'.format(text))
 
 
