@@ -15,24 +15,12 @@ def home():
 
 @app.route('/predict',methods=['POST'])
 def predict():
-    feature_list = request.form.to_dict()
-    #file = request.files[str(list(feature_list.values())[0])]
-    #imagefile = flask.request.files(str(list(feature_list.values())[0]), '')
-    # Read the image via file.stream
-    img = Image.open(str(list(feature_list.values())[0]))
-#     feature_list = list(feature_list.values())
-#     feature_list = list(map(int, feature_list))
-#     final_features = np.array(feature_list).reshape(1, 12) 
+    #feature_list = request.form.to_dict()
+    x = image.convert(request.json['image'])
     
-#     prediction = model.predict(final_features)
-#     output = int(prediction[0])
-#     if output == 1:
-#         text = ">50K"
-#     else:
-#         text = "<=50K"
 
-    #text = "<=50K"
-    text = str(list(feature_list.values())[0])
+    text = "<=50K"
+    #text = str(list(feature_list.values())[0])
     return render_template('index.html', prediction_text='Employee Income is {}'.format(text))
 
 
