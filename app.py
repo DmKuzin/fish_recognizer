@@ -14,7 +14,7 @@ def home():
 def predict():
     #feature_list = request.form.to_dict()
     imagefile = request.files.get('imagefile', '')
-    
+    file = request.files['imagefile']
 
     text = "<=50K"
     #text = str(list(feature_list.values())[0])
