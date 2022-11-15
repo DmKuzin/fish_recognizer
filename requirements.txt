@@ -5,7 +5,7 @@ Jinja2>=3.0.0
 MarkupSafe>=2.0
 Werkzeug>=2.2.2
 Pillow>=9.3.0
-keras>=2.11.0
+keras
 tensorflow>=2.4.0
 numpy>=1.23.4
 #scipy>=0.15.1
