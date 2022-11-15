@@ -5,9 +5,6 @@ from flask import Flask, request, render_template
 #import pickle
 
 app = Flask(__name__)
-# model = pickle.load(open('model.pkl', 'rb'))
-# cols=['age','workclass','education','marital-status','occupation','relationship','race','gender','capital-gain','capital-loss',
-#       'hours-per-week','native-country']
 
 @app.route('/')
 def home():
@@ -16,7 +13,7 @@ def home():
 @app.route('/predict',methods=['POST'])
 def predict():
     #feature_list = request.form.to_dict()
-    x = image.convert(request.json['image'])
+    rec = request.json
     
 
     text = "<=50K"
