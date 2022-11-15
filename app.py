@@ -1,6 +1,7 @@
 #import numpy as np
 #import pandas as pd
 from flask import Flask, request, render_template
+from PIL import Image
 #from sklearn import preprocessing
 #import pickle
 
@@ -15,11 +16,15 @@ def predict():
     #feature_list = request.form.to_dict()
     imagefile = request.files.get('img', '')
     file = request.files['img']
+    
+    pil_image = Image.open(file)
 
     text = "<=50K"
     #text = str(list(feature_list.values())[0])
     print('imagefile:', imagefile)
     print('file:', file)
+    print('pil_image:', pil_image)
+  
     return render_template('index.html', prediction_text='Employee Income is {}'.format(text))
 
 
