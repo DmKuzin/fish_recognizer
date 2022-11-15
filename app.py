@@ -16,8 +16,9 @@ def predict():
     rec = request
     
 
-    text = "<=50K"
+    #text = "<=50K"
     #text = str(list(feature_list.values())[0])
+    text = str(rec)
     return render_template('index.html', prediction_text='Employee Income is {}'.format(text))
 
 
