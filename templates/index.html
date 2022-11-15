@@ -5,6 +5,7 @@
         <form action="{{ url_for('predict')}}"method="post" enctype="multipart/form-data">
           <label for="img">Select image:</label>
           <input type="file" id="img" name="img" accept="image/*">
+          <img src="img" alt="Dinosaur" />
           <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
           </form>
         
