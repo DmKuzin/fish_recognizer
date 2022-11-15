@@ -4,7 +4,7 @@ app = Flask(__name__)
  
 @app.route('/', methods=['GET', 'POST'])
 def main():
-    return 0
+    return print 'test'
  
  
 if __name__ == "__main__":
