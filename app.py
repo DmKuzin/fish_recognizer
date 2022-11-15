@@ -13,12 +13,13 @@ def home():
 @app.route('/predict',methods=['POST'])
 def predict():
     #feature_list = request.form.to_dict()
-    #imagefile = request.files.get('img')
+    imagefile = flask.request.files('img', '')
     file = request.files['img']
 
     text = "<=50K"
     #text = str(list(feature_list.values())[0])
-    print('imagefile:', file)
+    print('imagefile:', imagefile)
+    print('file:', file)
     return render_template('index.html', prediction_text='Employee Income is {}'.format(text))
 
 
