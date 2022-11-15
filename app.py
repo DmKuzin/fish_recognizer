@@ -1,7 +1,7 @@
 import numpy as np
 #import pandas as pd
 from flask import Flask, request, render_template
-from PIL import Image
+from PIL import Image, ImageOps
 #import tensorflow as tf
 #from sklearn import preprocessing
 #import pickle
