@@ -16,10 +16,10 @@ def home():
 @app.route('/predict',methods=['POST'])
 def predict():
     feature_list = request.form.to_dict()
-    file = request.files[str(list(feature_list.values())[0])]
+    #file = request.files[str(list(feature_list.values())[0])]
     #imagefile = flask.request.files(str(list(feature_list.values())[0]), '')
     # Read the image via file.stream
-    img = Image.open(file.stream)
+    img = Image.open(str(list(feature_list.values())[0]))
 #     feature_list = list(feature_list.values())
 #     feature_list = list(map(int, feature_list))
 #     final_features = np.array(feature_list).reshape(1, 12) 
