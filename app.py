@@ -4,6 +4,8 @@ from flask import Flask, request, render_template
 #from sklearn import preprocessing
 #import pickle
 
+import image
+
 app = Flask(__name__)
 # model = pickle.load(open('model.pkl', 'rb'))
 # cols=['age','workclass','education','marital-status','occupation','relationship','race','gender','capital-gain','capital-loss',
@@ -16,7 +18,8 @@ def home():
 @app.route('/predict',methods=['POST'])
 def predict():
     feature_list = request.form.to_dict()
-    imagefile = flask.request.files(str(list(feature_list.values())[0]), '')
+    #imagefile = flask.request.files(str(list(feature_list.values())[0]), '')
+    x = image.convert(str(list(feature_list.values())[0]))
 #     feature_list = list(feature_list.values())
 #     feature_list = list(map(int, feature_list))
 #     final_features = np.array(feature_list).reshape(1, 12) 
