@@ -13,7 +13,7 @@ def home():
 @app.route('/predict',methods=['POST'])
 def predict():
     #feature_list = request.form.to_dict()
-    rec = request.files.get('file')
+    rec = request.files.get('myfile')
     
 
     #text = "<=50K"
