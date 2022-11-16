@@ -6,7 +6,7 @@ from PIL import Image, ImageOps
 #import tflite
 import tensorflow as tf
 #from sklearn import preprocessing
-#import pickle
+import pickle
 
 app = Flask(__name__)
 
@@ -27,6 +27,10 @@ def home():
     return render_template('index.html')
 
 model = tf.keras.models.load_model('models/mobileNet.h5')
+
+saved_file_name = 'models/targets_dictionary.pkl'
+with open(saved_file_name, 'rb') as f:
+    loaded_dict = pickle.load(f)
 
 @app.route('/predict',methods=['POST'])
 def predict():
