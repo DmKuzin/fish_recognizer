@@ -1,5 +1,5 @@
 import numpy as np
-#import pandas as pd
+import pandas as pd
 from flask import Flask, request, render_template
 from PIL import Image, ImageOps
 #from keras.models import load_model
@@ -44,13 +44,14 @@ def predict():
     
     pil_img_sqr = resize_with_padding(pil_image, expected_size=image_size)
     arr_img_sqr = np.asarray(pil_img_sqr) / 256.0
-    arr_img_sqr[None,:]
-    
-    text = "<=50K"
-    print('file:', file)
-    print('pil_image:', pil_image)
-  
-    return render_template('index.html', prediction_text='Employee Income is {}'.format(text))
+
+    prediction = label_name[pd.DataFrame(model.predict(arr_img_sqr[None, :])).idxmax(axis=1)[0]]
+
+    # text = "<=50K"
+    # print('file:', file)
+    # print('pil_image:', pil_image)
+
+    return render_template('index.html', prediction_text='Employee Income is {}'.format(prediction))
 
 
 if __name__ == "__main__":
