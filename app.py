@@ -3,7 +3,7 @@ import pandas as pd
 from flask import Flask, request, render_template
 from PIL import Image, ImageOps
 import tensorflow as tf
-import pickle5
+import pickle
 
 app = Flask(__name__)
 
@@ -28,12 +28,12 @@ def home():
 
 
 # load model
-model = tf.keras.models.load_model('models/mobileNet.h5')
+model = tf.keras.models.load_model('models/DensNet121.h5')
 
 # load output labels from file
 saved_file_name = 'models/targets_dictionary.pkl'
 with open(saved_file_name, 'rb') as f:
-    label_name = pickle5.load(f)
+    label_name = pickle.load(f)
 
 
 @app.route('/predict', methods=['POST'])
