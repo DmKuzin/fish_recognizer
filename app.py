@@ -4,7 +4,7 @@ from flask import Flask, request, render_template
 from PIL import Image, ImageOps
 #from keras.models import load_model
 #import tflite
-#import tensorflow as tf
+import tensorflow as tf
 #from sklearn import preprocessing
 #import pickle
 
@@ -25,6 +25,8 @@ def resize_with_padding(img, expected_size):
 @app.route('/')
 def home():
     return render_template('index.html')
+
+model = tf.keras.models.load_model('models/mobileNet.h5')
 
 @app.route('/predict',methods=['POST'])
 def predict():
