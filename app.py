@@ -31,9 +31,10 @@ def home():
 model = tf.keras.models.load_model('models/DensNet121.h5')
 
 # load output labels from file
-saved_file_name = 'models/targets_dictionary.pkl'
-with open(saved_file_name, 'rb') as f:
-    label_name = pickle.load(f)
+df_label_name_load = pd.read_excel('models/label_name.xlsx', index_col=0)
+# saved_file_name = 'models/targets_dictionary.pkl'
+# with open(saved_file_name, 'rb') as f:
+#     label_name = pickle.load(f)
 
 
 @app.route('/predict', methods=['POST'])
@@ -47,7 +48,9 @@ def predict():
     # normalize image and convert to tensor
     arr_img_sqr = np.asarray(pil_img_sqr) / 256.0
     # make prediction
-    prediction = label_name[pd.DataFrame(model.predict(arr_img_sqr[None, :])).idxmax(axis=1)[0]]
+    pred_idx = pd.DataFrame(model.predict(arr_img_sqr[None, :])).idxmax(axis=1)[0]
+    prediction = df_label_name_load.iloc[[pred_idx]]['rus'].values[0]
+    #prediction = label_name[pd.DataFrame(model.predict(arr_img_sqr[None, :])).idxmax(axis=1)[0]]
 
     return render_template('index.html', prediction_text='Prediction fish: {}'.format(prediction))
 
