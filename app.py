@@ -4,7 +4,7 @@ from flask import Flask, request, render_template
 from PIL import Image, ImageOps
 #from keras.models import load_model
 #import tflite
-import tensorflow as tf
+#import tensorflow as tf
 #from sklearn import preprocessing
 #import pickle
 
