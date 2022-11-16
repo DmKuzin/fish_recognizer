@@ -31,7 +31,7 @@ def home():
 model = tf.keras.models.load_model('models/DensNet121.h5')
 
 # load output labels from file
-df_label_name_load = pd.read_csv('label_name.csv', index_col=0)
+df_label_name_load = pd.read_csv('models/label_name.csv', index_col=0)
 # saved_file_name = 'models/targets_dictionary.pkl'
 # with open(saved_file_name, 'rb') as f:
 #     label_name = pickle.load(f)
