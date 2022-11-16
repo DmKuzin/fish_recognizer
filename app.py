@@ -30,7 +30,7 @@ model = tf.keras.models.load_model('models/mobileNet.h5')
 
 saved_file_name = 'models/targets_dictionary.pkl'
 with open(saved_file_name, 'rb') as f:
-    loaded_dict = pickle.load(f)
+    label_name = pickle.load(f)
 
 @app.route('/predict',methods=['POST'])
 def predict():
