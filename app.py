@@ -32,6 +32,8 @@ saved_file_name = 'models/targets_dictionary.pkl'
 with open(saved_file_name, 'rb') as f:
     label_name = pickle5.load(f)
 
+print(label_name)
+
 @app.route('/predict',methods=['POST'])
 def predict():
     #feature_list = request.form.to_dict()
