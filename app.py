@@ -51,7 +51,7 @@ def predict():
     # print('file:', file)
     # print('pil_image:', pil_image)
 
-    return render_template('index.html', prediction_text='Employee Income is {}'.format(prediction))
+    return render_template('index.html', prediction_text='Prediction fish: {}'.format(prediction))
 
 
 if __name__ == "__main__":
