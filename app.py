@@ -33,9 +33,12 @@ def allowed_file(filename):
 
 # Open file and convert to input network format
 def decode_image_from_file(filename, image_size=image_size):
-    bits = tf.io.read_file(filename)
-    image = tf.image.decode_jpeg(bits, channels=3)
-    image = tf.cast(image, tf.float32) / 255.0
+    #bits = tf.io.read_file(filename)
+    #image = tf.image.decode_jpeg(bits, channels=3)
+    pil_img = Image.open(filename)
+    pil_img_rgb = pil_img.convert('RGB')
+    pil_img_rgb_arr = np.asarray(pil_img_rgb)
+    image = tf.cast(pil_img_rgb_arr, tf.float32) / 255.0
     image = tf.image.resize_with_pad(image,
                                      target_height=image_size[0],
                                      target_width=image_size[1],
@@ -72,8 +75,8 @@ def predict():
     if file.filename == '':
         return render_template('index.html', prediction_text='No selected file')
     if file and allowed_file(file.filename):
-        #filename = werkzeug.utils.secure_filename(file.filename)
-        filename = file.filename
+        filename = werkzeug.utils.secure_filename(file.filename)
+        #filename = file.filename
         print(filename)
         arr_img_sqr = decode_image_from_file(filename)
         pred_idx = pd.DataFrame(model.predict(arr_img_sqr[None, :])).idxmax(axis=1)[0]
