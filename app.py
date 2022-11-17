@@ -70,11 +70,15 @@ def predict():
     # If the user does not select a file, the browser submits an
     # empty file without a filename.
     if file.filename == '':
-        flash('No selected file')
-        return redirect(request.url)
+        return render_template('index.html', prediction_text='No selected file')
     if file and allowed_file(file.filename):
         filename = werkzeug.utils.secure_filename(file.filename)
         print(filename)
+        arr_img_sqr = decode_image_from_file(file)
+        pred_idx = pd.DataFrame(model.predict(arr_img_sqr[None, :])).idxmax(axis=1)[0]
+        prediction = df_label_name_load.iloc[[pred_idx]]['rus'].values[0]
+
+        return render_template('index.html', prediction_text='Prediction fish: {}'.format(prediction))
 
     # open file as image
     # pil_image = Image.open(file)
@@ -87,9 +91,9 @@ def predict():
     # pred_idx = pd.DataFrame(model.predict(arr_img_sqr[None, :])).idxmax(axis=1)[0]
     # prediction = df_label_name_load.iloc[[pred_idx]]['rus'].values[0]
     # prediction = label_name[pd.DataFrame(model.predict(arr_img_sqr[None, :])).idxmax(axis=1)[0]]
-    prediction = 'test'
+    #prediction = 'test'
 
-    return render_template('index.html', prediction_text='Prediction fish: {}'.format(prediction))
+    # return render_template('index.html', prediction_text='Prediction fish: {}'.format(prediction))
 
 
 if __name__ == "__main__":
