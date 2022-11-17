@@ -66,12 +66,6 @@ df_label_name_load = pd.read_csv('models/label_name.csv', index_col=0)
 @app.route('/predict', methods=['POST'])
 def predict():
     # read file from request
-    #file = request.files['img']
-
-    # check if the post request has the file part
-    if 'file' not in request.files:
-        flash('No file part')
-        return redirect(request.url)
     file = request.files['img']
     # If the user does not select a file, the browser submits an
     # empty file without a filename.
@@ -84,7 +78,7 @@ def predict():
 
     # open file as image
     # pil_image = Image.open(file)
-    arr_img_sqr = decode_image_from_file(file)
+    #arr_img_sqr = decode_image_from_file(file)
     # resize image to network input
     # pil_img_sqr = resize_with_padding(pil_image, expected_size=image_size)
     # normalize image and convert to tensor
