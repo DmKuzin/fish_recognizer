@@ -65,9 +65,10 @@ def predict():
     # normalize image and convert to tensor
     #arr_img_sqr = np.asarray(pil_img_sqr) / 256.0
     # make prediction
-    pred_idx = pd.DataFrame(model.predict(arr_img_sqr[None, :])).idxmax(axis=1)[0]
-    prediction = df_label_name_load.iloc[[pred_idx]]['rus'].values[0]
+    # pred_idx = pd.DataFrame(model.predict(arr_img_sqr[None, :])).idxmax(axis=1)[0]
+    # prediction = df_label_name_load.iloc[[pred_idx]]['rus'].values[0]
     # prediction = label_name[pd.DataFrame(model.predict(arr_img_sqr[None, :])).idxmax(axis=1)[0]]
+    prediction = 'test'
 
     return render_template('index.html', prediction_text='Prediction fish: {}'.format(prediction))
 
