@@ -11,7 +11,7 @@ app = Flask(__name__)
 # input image size
 image_size = (256, 256)
 # allowed extensions
-ALLOWED_EXTENSIONS = {'jpg', 'jpeg'}
+ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'bmp'}
 
 
 # check file on allowed extension
@@ -33,8 +33,6 @@ def allowed_file(filename):
 
 # Open file and convert to input network format
 def decode_image_from_file(filename, image_size=image_size):
-    #bits = tf.io.read_file(filename)
-    #image = tf.image.decode_jpeg(bits, channels=3)
     pil_img = Image.open(filename)
     pil_img_rgb = pil_img.convert('RGB')
     pil_img_rgb_arr = np.asarray(pil_img_rgb)
@@ -75,30 +73,14 @@ def predict():
     if file.filename == '':
         return render_template('index.html', prediction_text='No selected file')
     if file and allowed_file(file.filename):
-        filename = werkzeug.utils.secure_filename(file.filename)
-        #filename = file.filename
-        print('file: ', file)
-        print('filename:', filename)
+        # filename = werkzeug.utils.secure_filename(file.filename)
+        # print('file: ', file)
+        # print('filename:', filename)
         arr_img_sqr = decode_image_from_file(file)
         pred_idx = pd.DataFrame(model.predict(arr_img_sqr[None, :])).idxmax(axis=1)[0]
         prediction = df_label_name_load.iloc[[pred_idx]]['rus'].values[0]
 
         return render_template('index.html', prediction_text='Prediction fish: {}'.format(prediction))
-
-    # open file as image
-    # pil_image = Image.open(file)
-    #arr_img_sqr = decode_image_from_file(file)
-    # resize image to network input
-    # pil_img_sqr = resize_with_padding(pil_image, expected_size=image_size)
-    # normalize image and convert to tensor
-    # arr_img_sqr = np.asarray(pil_img_sqr) / 256.0
-    # make prediction
-    # pred_idx = pd.DataFrame(model.predict(arr_img_sqr[None, :])).idxmax(axis=1)[0]
-    # prediction = df_label_name_load.iloc[[pred_idx]]['rus'].values[0]
-    # prediction = label_name[pd.DataFrame(model.predict(arr_img_sqr[None, :])).idxmax(axis=1)[0]]
-    #prediction = 'test'
-
-    # return render_template('index.html', prediction_text='Prediction fish: {}'.format(prediction))
 
 
 if __name__ == "__main__":
