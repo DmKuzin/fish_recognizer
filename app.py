@@ -72,7 +72,8 @@ def predict():
     if file.filename == '':
         return render_template('index.html', prediction_text='No selected file')
     if file and allowed_file(file.filename):
-        filename = werkzeug.utils.secure_filename(file.filename)
+        #filename = werkzeug.utils.secure_filename(file.filename)
+        filename = file.filename
         print(filename)
         arr_img_sqr = decode_image_from_file(filename)
         pred_idx = pd.DataFrame(model.predict(arr_img_sqr[None, :])).idxmax(axis=1)[0]
