@@ -10,16 +10,30 @@ app = Flask(__name__)
 # input image size
 image_size = (256, 256)
 
+
 # resize image function
-def resize_with_padding(img, expected_size):
-    img.thumbnail((expected_size[0], expected_size[1]))
-    # print(img.size)
-    delta_width = expected_size[0] - img.size[0]
-    delta_height = expected_size[1] - img.size[1]
-    pad_width = delta_width // 2
-    pad_height = delta_height // 2
-    padding = (pad_width, pad_height, delta_width - pad_width, delta_height - pad_height)
-    return ImageOps.expand(img, padding)
+# def resize_with_padding(img, expected_size):
+#     img.thumbnail((expected_size[0], expected_size[1]))
+#     # print(img.size)
+#     delta_width = expected_size[0] - img.size[0]
+#     delta_height = expected_size[1] - img.size[1]
+#     pad_width = delta_width // 2
+#     pad_height = delta_height // 2
+#     padding = (pad_width, pad_height, delta_width - pad_width, delta_height - pad_height)
+#     return ImageOps.expand(img, padding)
+
+def decode_image_from_file(filename, image_size=image_size):
+    bits = tf.io.read_file(filename)
+    image = tf.image.decode_jpeg(bits, channels=3)
+    image = tf.cast(image, tf.float32) / 255.0
+    image = tf.image.resize_with_pad(image,
+                                     target_height=image_size[0],
+                                     target_width=image_size[1],
+                                     method=tf.image.ResizeMethod.BILINEAR,
+                                     antialias=False
+                                     )
+
+    return image
 
 
 @app.route('/')
@@ -32,6 +46,8 @@ model = tf.keras.models.load_model('models/DensNet121.h5')
 
 # load output labels from file
 df_label_name_load = pd.read_csv('models/label_name.csv', index_col=0)
+
+
 # saved_file_name = 'models/targets_dictionary.pkl'
 # with open(saved_file_name, 'rb') as f:
 #     label_name = pickle.load(f)
@@ -42,15 +58,16 @@ def predict():
     # read file from request
     file = request.files['img']
     # open file as image
-    pil_image = Image.open(file)
+    #pil_image = Image.open(file)
+    arr_img_sqr = decode_image_from_file(file)
     # resize image to network input
-    pil_img_sqr = resize_with_padding(pil_image, expected_size=image_size)
+    #pil_img_sqr = resize_with_padding(pil_image, expected_size=image_size)
     # normalize image and convert to tensor
-    arr_img_sqr = np.asarray(pil_img_sqr) / 256.0
+    #arr_img_sqr = np.asarray(pil_img_sqr) / 256.0
     # make prediction
     pred_idx = pd.DataFrame(model.predict(arr_img_sqr[None, :])).idxmax(axis=1)[0]
     prediction = df_label_name_load.iloc[[pred_idx]]['rus'].values[0]
-    #prediction = label_name[pd.DataFrame(model.predict(arr_img_sqr[None, :])).idxmax(axis=1)[0]]
+    # prediction = label_name[pd.DataFrame(model.predict(arr_img_sqr[None, :])).idxmax(axis=1)[0]]
 
     return render_template('index.html', prediction_text='Prediction fish: {}'.format(prediction))
 
